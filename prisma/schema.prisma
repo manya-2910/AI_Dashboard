@@ -4,8 +4,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -33,6 +33,6 @@ model Document {
   workspaceId   String
   workspace     Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   filename      String
-  extractedText String
+  extractedText String    @db.Text
   createdAt     DateTime  @default(now())
 }
