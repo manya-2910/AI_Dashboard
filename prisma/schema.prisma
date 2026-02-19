@@ -1,0 +1,38 @@
+// Prisma schema for AI Dashboard
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id         String      @id @default(cuid())
+  name       String
+  email      String      @unique
+  password   String
+  role       String      @default("user")
+  approved   Boolean     @default(false)
+  createdAt  DateTime    @default(now())
+  workspaces Workspace[]
+}
+
+model Workspace {
+  id        String     @id @default(cuid())
+  name      String
+  userId    String
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  documents Document[]
+  createdAt DateTime   @default(now())
+}
+
+model Document {
+  id            String    @id @default(cuid())
+  workspaceId   String
+  workspace     Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  filename      String
+  extractedText String
+  createdAt     DateTime  @default(now())
+}
