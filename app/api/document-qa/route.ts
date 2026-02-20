@@ -4,6 +4,8 @@ import { extractText } from '@/app/lib/document';
 import { chunkText, retrieveRelevantChunks } from '@/app/lib/chunker';
 import { askGroq } from '@/app/lib/groq';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: NextRequest) {
     const session = await getSession();
     if (!session) {

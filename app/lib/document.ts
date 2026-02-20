@@ -9,7 +9,9 @@ export async function extractText(
     if (mimetype === 'application/pdf') {
         try {
             // Dynamic import to avoid Next.js bundling issues
-            const pdfParse = (await import('pdf-parse')).default;
+            const pdf = await import('pdf-parse');
+            // Some environments/versions might require accessing .default
+            const pdfParse = typeof pdf === 'function' ? pdf : pdf.default;
             const data = await pdfParse(buffer);
             return data.text;
         } catch (error) {
