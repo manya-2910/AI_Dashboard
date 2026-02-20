@@ -45,6 +45,7 @@ export async function POST(request: Request) {
             userId: user.id,
             email: user.email,
             role: user.role,
+            approved: user.approved,
         });
 
         const response = NextResponse.json({
